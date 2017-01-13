@@ -27,11 +27,13 @@ public class GameView extends View {
     public GameView(Context c, AttributeSet attrs) {
         super(c, attrs);
 
-        Mirror mirror=new Mirror(100, 100, Mirror.DEFAULT_SIZE, 0, Mirror.Type.REFLECT);
+        Mirror mirror=new Mirror(100, 100, Mirror.DEFAULT_SIZE, 35, Mirror.Type.REFLECT);
         mMirrors.add(mirror);
         mirror=new Mirror(100, 200, Mirror.DEFAULT_SIZE, 0, Mirror.Type.ABSORB);
         mMirrors.add(mirror);
-        mirror=new Mirror(100, 300, Mirror.DEFAULT_SIZE, 0, Mirror.Type.COMPLETE);
+        mirror=new Mirror(100, 300, Mirror.DEFAULT_SIZE, 90, Mirror.Type.COMPLETE);
+        mMirrors.add(mirror);
+        mirror=new Mirror(100, 400, Mirror.DEFAULT_SIZE, 84.2, Mirror.Type.REFLECT);
         mMirrors.add(mirror);
     }
 

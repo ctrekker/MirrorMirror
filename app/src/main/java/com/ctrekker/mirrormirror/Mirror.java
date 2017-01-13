@@ -3,6 +3,9 @@ package com.ctrekker.mirrormirror;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.util.Log;
+
+import com.ctrekker.mirrormirror.math.Slope;
 
 /**
  * Created by ctrek on 1/13/2017.
@@ -16,7 +19,8 @@ public class Mirror {
     private int mX;
     private int mY;
     private int mSize;
-    private float mAngle;
+    private double mAngle=0;
+    private Slope mSlope;
     private Path mPath;
     private Paint mPaint;
 
@@ -28,7 +32,7 @@ public class Mirror {
 
         init();
     }
-    public Mirror(int x, int y, int size, float angle) {
+    public Mirror(int x, int y, int size, double angle) {
         mX=x;
         mY=y;
         mSize=size;
@@ -45,7 +49,7 @@ public class Mirror {
 
         init();
     }
-    public Mirror(int x, int y, int size, float angle, Type type) {
+    public Mirror(int x, int y, int size, double angle, Type type) {
         mX=x;
         mY=y;
         mSize=size;
@@ -55,6 +59,9 @@ public class Mirror {
         init();
     }
     private void init() {
+        mSlope=Slope.fromAngle(mAngle);
+        Log.d("Mirror", mSlope.toString());
+
         mPaint=new Paint();
         mPaint.setAntiAlias(true);
         switch(mType) {
@@ -124,11 +131,11 @@ public class Mirror {
         mSize = size;
     }
 
-    public float getAngle() {
+    public double getAngle() {
         return mAngle;
     }
 
-    public void setAngle(float angle) {
+    public void setAngle(double angle) {
         mAngle = angle;
     }
 }
