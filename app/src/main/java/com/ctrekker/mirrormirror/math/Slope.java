@@ -12,9 +12,11 @@ public class Slope {
     public Slope(double rise, double run) {
         mRise=rise;
         mRun=run;
-        mDistance=(double)Math.sqrt(Math.pow(rise, 2)+Math.pow(run, 2));
+        mDistance=Math.sqrt(Math.pow(rise, 2)+Math.pow(run, 2));
     }
     public static Slope fromAngle(double angle) {
+        angle=Math.abs(angle);
+
         double rise;
         double run;
         if(angle==0) {
@@ -62,5 +64,13 @@ public class Slope {
     @Override
     public String toString() {
         return "[Rise:"+mRise+";Run:"+mRun+";Distance:"+mDistance+"]";
+    }
+
+    public double getDistance() {
+        return mDistance;
+    }
+
+    public void setDistance(double distance) {
+        mDistance = distance;
     }
 }

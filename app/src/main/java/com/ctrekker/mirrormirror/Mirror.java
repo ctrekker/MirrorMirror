@@ -23,6 +23,10 @@ public class Mirror {
     private Slope mSlope;
     private Path mPath;
     private Paint mPaint;
+    private float mP1X;
+    private float mP1Y;
+    private float mP2X;
+    private float mP2Y;
 
     public Mirror(int x, int y, int size) {
         mX=x;
@@ -59,8 +63,6 @@ public class Mirror {
         init();
     }
     private void init() {
-        mSlope=Slope.fromAngle(mAngle);
-        Log.d("Mirror", mSlope.toString());
 
         mPaint=new Paint();
         mPaint.setAntiAlias(true);
@@ -82,9 +84,47 @@ public class Mirror {
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeWidth(10f);
 
+        reCalc();
+    }
+    private void reCalc() {
+        mSlope=Slope.fromAngle(mAngle);
+
+        double slopeFactorX=mSize/2;
+        double slopeFactorY=0;
+        if(mAngle<90) {
+            slopeFactorX = (mSize / 2) * Math.cos(Math.toRadians(mAngle));
+            slopeFactorY = (mSize / 2) * Math.sin(Math.toRadians(mAngle));
+        }
+        else if(mAngle>=90) {
+            slopeFactorX=-((mSize/2)*Math.cos(Math.toRadians(mAngle-90)));
+            slopeFactorY=(mSize/2)*Math.sin(Math.toRadians(mAngle-90));
+        }
+        Log.d("Mirror", "slopeFactorX:"+slopeFactorX+"; slopeFactorY:"+slopeFactorY);
+
+        mP1X=mX+(float)slopeFactorX;
+        mP1Y=mY-(float)slopeFactorY;
+        mP2X=mX-(float)slopeFactorX;
+        mP2Y=mY+(float)slopeFactorY;
+
         mPath=new Path();
-        mPath.moveTo(mX-mSize/2, mY);
-        mPath.lineTo(mX+mSize/2, mY);
+        mPath.moveTo(mP1X, mP1Y);
+        mPath.lineTo(mP2X, mP2Y);
+    }
+
+    public float getP1X() {
+        return mP1X;
+    }
+
+    public float getP1Y() {
+        return mP1Y;
+    }
+
+    public float getP2X() {
+        return mP2X;
+    }
+
+    public float getP2Y() {
+        return mP2Y;
     }
 
     public enum Type {
@@ -137,5 +177,6 @@ public class Mirror {
 
     public void setAngle(double angle) {
         mAngle = angle;
+        reCalc();
     }
 }
